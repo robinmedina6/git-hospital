@@ -40,7 +40,7 @@ class Login extends CI_Controller {
 			);
 			$this->session->set_userdata($data);
 			$this->session->set_flashdata('msg','bienvenido al sistema '.$data['nombre_usuario']);
-			echo json_encode(array('url'=>base_url('index.php/dashboard')));
+			echo json_encode(array('url'=>base_url('index.php/users')));
 		}
 		
 		

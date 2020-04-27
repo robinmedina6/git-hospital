@@ -1,4 +1,51 @@
 <?php
+if(!function_exists('getUpdateUserRules')){
+	function getUpdateUserRules(){
+		return array(
+			array(
+				'field'=>'nombre',
+				'label'=>'Nombre',
+				'rules'=>'required',
+				'errors' =>array(
+						'required'=> 'El %s es requerido',
+				)
+			),
+			array(
+					'field'=>'apellido',
+					'label'=>'Apellido',
+					'rules'=>'required',
+					'errors' =>array(
+							'required'=> 'El %s es requerido',
+					)
+			),
+			array(
+					'field'=>'area',
+					'label'=>'Area',
+					'rules'=>'required',
+					'errors' =>array(
+							'required'=> 'El %s es requerido',
+					)
+			),
+			array(
+					'field'=>'especialidad',
+					'label'=>'especialidad',
+					'rules'=>'required',
+					'errors' =>array(
+							'required'=> 'El %s es requerido',
+					)
+			),
+			array(
+					'field'=>'cedula',
+					'label'=>'Cedula',
+					'rules'=>'required',
+					'errors' =>array(
+							'required'=> 'El %s es requerido',
+					)
+			)
+		);
+	}
+}
+
 if(!function_exists('getCreateUserRules')){
 	function getCreateUserRules(){
 		return array(

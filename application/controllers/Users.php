@@ -4,7 +4,7 @@ class Users extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		//$this->load->library(array('session'));	
-		$this->load->library(array('form_validation','email'));
+		$this->load->library(array('form_validation','email','pagination'));
 		$this->load->helper(array('users/user_rules','string'));
 		$this->load->model('ModelsUsers');
 	}
@@ -12,9 +12,46 @@ class Users extends CI_Controller {
 			$vista=$this->load->view('admin/create_users','',true);
 			$this->getTemplate($vista);
 	}
-	public function index(){
-		 $vista=$this->load->view('admin/show_users','',true);
+	public function update(){
+		//echo $this->input->post('nombre') ;
+		$this->form_validation->set_rules(getUpdateUserRules());
+		if ($this->form_validation->run()==false){
+			
+			$vista=$this->load->view('admin/edit_user','',true);
 			$this->getTemplate($vista);
+		}else{
+			show_404();
+		}
+
+
+		//$vista=$this->load->view('admin/create_users','',true);
+		//$this->getTemplate($vista);
+
+}
+	public function index($offset = 0){
+		$data=$this->ModelsUsers->getUsers();
+		$config['base_url']=base_url('index.php/users/index');
+		$config['per_page']= 5;
+		$config['total_rows']=count($data);
+		$config['full_tag_open']='<div class="pagging text-center"><nav><ul class="pagination">';
+		$config['full_tag_close']='</ul></nav></div>';
+		$config['num_tag_open']='<li class="page-item"><span class="page-link">';
+		$config['num_tag_close']='</span></li>';
+		$config['cur_tag_open']='<li class="page-item active"><span class="page-link">';
+		$config['cur_tag_close']='<span class="sr-only">(current)</span></span></li>';
+		$config['next_tag_open']='<li class="page-item"><span class="page-link"> ';
+		$config['next_tag_close']='<span aria-hidden="true"></span></span></li>';
+		$config['prev_tag_open']='<li class="page-item"><span class="page-link">';
+		$config['prev_tag_close']='</span></li>';
+		$config['first_tag_open']='<li class="page-item"><span class="page-link">';
+		$config['first_tag_close']='</span></li>';
+		$config['last_tag_open']='<li class="page-item"><span class="page-link">';
+		$config['last_tag_close']='</span></li>';
+		//var_dump($data);
+		$this->pagination->initialize($config);
+		$page = $this->ModelsUsers->getPaginate($config['per_page'],$offset);
+		$this->getTemplate($this->load->view('admin/show_users',array('data'=>$page),true));
+
 	}
 	public function sendEmail($data){
 			$this->load->library('email');
@@ -79,6 +116,12 @@ class Users extends CI_Controller {
 					//'content'=>$head,
 			));
 			$this->load->view('dashboard',$data);
+	}
+	public function edit($id=0){
+		$user= $this->ModelsUsers->getUser($id);
+		$vista = $this->load->view('admin/edit_user',array('user'=>$user),true);
+		$this->getTemplate($vista);
+
 	}
 	
 }

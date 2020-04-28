@@ -22,6 +22,11 @@ class ModelsUsers extends CI_Model {
 
 
 	}
+	public function updateUser($id,$data){
+		$this->db->where('id',$id);
+		$this->db->update('medico',$data);
+
+	}
 	public function getUser($id){
 		/*haciendo el join
 		SELECT *

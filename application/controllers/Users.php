@@ -13,16 +13,35 @@ class Users extends CI_Controller {
 			$this->getTemplate($vista);
 	}
 	public function update(){
-		//echo $this->input->post('nombre') ;
-		$this->form_validation->set_rules(getUpdateUserRules());
-		if ($this->form_validation->run()==false){
-			
-			$vista=$this->load->view('admin/edit_user','',true);
-			$this->getTemplate($vista);
+		if($this->input->server('REQUEST_METHOD')==="POST"){
+			$nombre= $this->input->post('nombre') ;
+			$_id= $this->input->post('_id') ;
+			$apellido= $this->input->post('apellido') ;
+			$cedula =$this->input->post('cedula') ;
+			$especialidad= $this->input->post('especialidad') ;
+			$area= $this->input->post('area') ;
+			$username= $this->input->post('username') ;
+			$this->form_validation->set_rules(getUpdateUserRules());
+			if ($this->form_validation->run()==false){
+				
+				$vista=$this->load->view('admin/edit_user','',true);
+				$this->getTemplate($vista);
+			}else{
+				//show_404();
+				$data=array(
+					'nombre'=>$nombre,
+					'apellido'=>$apellido,
+					'cedula'=>$cedula,
+					'especialidad'=>$especialidad,
+					'area'=>$area,
+				);
+				$this->ModelsUsers->updateUser($_id,$data);
+				$this->session->set_flashdata('msg','El usuario '.$username.' se ha actualizado');
+				redirect('users');
+			}
 		}else{
 			show_404();
 		}
-
 
 		//$vista=$this->load->view('admin/create_users','',true);
 		//$this->getTemplate($vista);

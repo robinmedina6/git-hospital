@@ -7,7 +7,7 @@
                 <div class="form-group col-md-4">
                     <label>Nombre Usuario</label>
                     <input type="text" name="username" value="<?= set_value("username", isset($user['nombre_usuario']) ? $user['nombre_usuario'] : '' )?>" class="form-control" placeholder="" readonly>
-                    <input type="hidden" value="<?= set_value("_id", isset($user['_id']) ? $user['nombre_usuario'] : '' )?>" name="_id" >
+                    <input type="hidden" value="<?= set_value("_id", isset($user['id']) ? $user['id'] : '' )?>" name="_id" >
                     
                 </div>
                 <div class="form-group col-md-4">

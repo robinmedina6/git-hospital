@@ -3,12 +3,22 @@ if(!function_exists('getUpdateUserRules')){
 	function getUpdateUserRules(){
 		return array(
 			array(
+				'field'=>'_id',
+				'label'=>'id',
+				'rules'=>'required',
+				'errors' =>array(
+						'required'=> 'El %s es requerido',
+				)
+				),
+				
+			array(
 				'field'=>'nombre',
 				'label'=>'Nombre',
 				'rules'=>'required',
 				'errors' =>array(
 						'required'=> 'El %s es requerido',
 				)
+				
 			),
 			array(
 					'field'=>'apellido',

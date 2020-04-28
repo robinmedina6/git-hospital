@@ -1,3 +1,8 @@
+<?php if($msg=$this->session->flashdata('msg')): ?>
+    <div class="alert alert-success" role="alert">
+      <?=$msg?>
+    </div>
+<?php endif;?>
 <h1 class="text-center">Tabla de Usuarios Registrados</h1>
 <table class="table">
   <thead class="thead-dark">
